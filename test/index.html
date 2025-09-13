@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSC Exam Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .progress-bar { transition: width 0.5s ease; }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .section-divider {
+            border-left: 4px solid #6366f1;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        textarea:focus, input:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #6366f1;
+            border-color: #6366f1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-graduation-cap text-2xl"></i>
+                    <div>
+                        <h1 class="text-xl font-bold">UPSC Exam Portal</h1>
+                        <p class="text-sm text-indigo-200">History Foundation Test</p>
+                    </div>
+                </div>
+                <div id="timer" class="bg-white/20 backdrop-blur-md rounded-lg px-4 py-2 flex items-center space-x-2">
+                    <i class="fas fa-clock text-lg"></i>
+                    <span id="time-display" class="font-mono text-lg font-semibold">00:00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Loading Section -->
+        <div id="loading-section" class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+                <i class="fas fa-spinner fa-spin text-4xl text-indigo-400 mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Loading Exam...</h2>
+                <p class="text-gray-600">Preparing your test questions</p>
+            </div>
+        </div>
+
+        <!-- Exam Section -->
+        <div id="exam-section" class="hidden max-w-6xl mx-auto">
+            <!-- Exam Header -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="text-center mb-4">
+                    <h2 id="exam-title" class="text-2xl font-bold text-gray-800 mb-2">Loading...</h2>
+                    <div class="flex justify-center space-x-6 text-sm text-gray-600">
+                        <span><i class="fas fa-clock mr-1"></i>Duration: <span id="exam-duration">0</span> minutes</span>
+                        <span><i class="fas fa-award mr-1"></i>Total Marks: <span id="exam-marks">0</span></span>
+                        <span><i class="fas fa-list mr-1"></i>Questions: <span id="total-questions">0</span></span>
+                    </div>
+                </div>
+                
+                <!-- Instructions -->
+                <div class="bg-blue-50 rounded-lg p-4">
+                    <h3 class="font-semibold text-blue-800 mb-2">Instructions:</h3>
+                    <ul id="exam-instructions" class="list-disc list-inside space-y-1 text-sm text-blue-700">
+                        <!-- Instructions will be populated here -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-600">Progress</span>
+                    <span id="progress-text" class="text-sm font-medium text-gray-600">0 / 0 answered</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div id="progress-bar" class="progress-bar bg-gradient-to-r from-indigo-500 to-purple-600 h-3 rounded-full" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="questions-container">
+                <!-- Questions will be populated here -->
+            </div>
+
+            <!-- Submit Button -->
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <button id="submit-exam-btn" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
+                    <i class="fas fa-paper-plane mr-2"></i>Submit Exam
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="hidden max-w-4xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="text-center mb-6">
+                    <div class="w-32 h-32 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <span id="overall-score" class="text-3xl font-bold text-white">0%</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Exam Completed!</h2>
+                    <p class="text-gray-600">Here's your detailed evaluation</p>
+                </div>
+
+                <!-- Overall Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-blue-50 p-6 rounded-lg text-center">
+                        <i class="fas fa-star text-3xl text-blue-500 mb-2"></i>
+                        <h3 class="text-2xl font-bold text-blue-700" id="total-score-display">0</h3>
+                        <p class="text-blue-600">Total Score</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg text-center">
+                        <i class="fas fa-percentage text-3xl text-green-500 mb-2"></i>
+                        <h3 class="text-2xl font-bold text-green-700" id="percentage-display">0%</h3>
+                        <p class="text-green-600">Percentage</p>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg text-center">
+                        <i class="fas fa-trophy text-3xl text-purple-500 mb-2"></i>
+                        <h3 class="text-xl font-bold text-purple-700" id="grade-display">-</h3>
+                        <p class="text-purple-600">Grade</p>
+                    </div>
+                </div>
+
+                <!-- Section-wise Results -->
+                <div id="section-results" class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Section-wise Performance</h3>
+                    <div id="section-breakdown">
+                        <!-- Section results will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div id="detailed-analysis" class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Detailed Analysis</h3>
+                    <div id="analysis-content" class="prose max-w-none">
+                        <!-- Analysis content will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-center space-x-4 mt-8">
+                    <button id="restart-exam-btn" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
+                        <i class="fas fa-redo mr-2"></i>Retake Exam
+                    </button>
+                    <button id="download-results-btn" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
+                        <i class="fas fa-download mr-2"></i>Download Results
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Key Modal -->
+        <div id="api-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Gemini API Configuration</h3>
+                <p class="text-gray-600 mb-4 text-sm">Please enter your Gemini API key to enable automatic evaluation:</p>
+                <input type="password" id="api-key-input" placeholder="Enter Gemini API Key" 
+                       class="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                <div class="flex space-x-3">
+                    <button id="save-api-key" class="flex-1 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600">
+                        Save & Continue
+                    </button>
+                    <button id="skip-api" class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">
+                        Skip for Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        class ExamApp {
+            constructor() {
+                this.examData = null;
+                this.answers = {};
+                this.timerInterval = null;
+                this.timeLeft = 0;
+                this.geminiApiKey = localStorage.getItem('geminiApiKey') || '';
+                
+                this.initEventListeners();
+                this.loadExamData();
+            }
+
+            async loadExamData() {
+                try {
+                    // Try to load from test.json file
+                    const response = await fetch('./test.json');
+                    if (!response.ok) {
+                        throw new Error('Failed to load test.json');
+                    }
+                    
+                    this.examData = await response.json();
+                    this.validateExamData();
+                    
+                    // Check for API key
+                    if (!this.geminiApiKey) {
+                        document.getElementById('api-modal').style.display = 'flex';
+                    } else {
+                        this.startExam();
+                    }
+                    
+                } catch (error) {
+                    // Fallback to demo data if test.json is not found
+                    console.warn('Could not load test.json, using demo data');
+                    this.loadDemoData();
+                    
+                    if (!this.geminiApiKey) {
+                        document.getElementById('api-modal').style.display = 'flex';
+                    } else {
+                        this.startExam();
+                    }
+                }
+            }
+
+            loadDemoData() {
+                // Demo data based on your JSON structure
+                this.examData = {
+                    "exam": {
+                        "title": "Class 6 History – UPSC Oriented Test (Theory Part)",
+                        "duration_minutes": 120,
+                        "total_marks": 120,
+                        "instructions": [
+                            "Attempt all questions.",
+                            "Answer must be written on the provided answer sheet.",
+                            "Stick to word limits where mentioned."
+                        ],
+                        "sections": [
+                            {
+                                "section_id": "short_notes",
+                                "title": "Short Notes",
+                                "marks": 25,
+                                "question_type": "short_answer",
+                                "questions": [
+                                    {
+                                        "qno": 1,
+                                        "question": "Write a short note on the importance of the Indus Valley seals."
+                                    },
+                                    {
+                                        "qno": 2,
+                                        "question": "Explain the significance of megaliths in understanding early societies."
+                                    },
+                                    {
+                                        "qno": 3,
+                                        "question": "Who were the Janapadas? Mention any two features."
+                                    },
+                                    {
+                                        "qno": 4,
+                                        "question": "Describe the role of Ashoka in spreading Buddhism."
+                                    },
+                                    {
+                                        "qno": 5,
+                                        "question": "What was the importance of Nalanda University in ancient India?"
+                                    }
+                                ]
+                            },
+                            {
+                                "section_id": "medium_questions",
+                                "title": "Medium Length Questions",
+                                "marks": 50,
+                                "question_type": "medium_answer",
+                                "questions": [
+                                    {
+                                        "qno": 6,
+                                        "question": "Discuss the main features of town planning in the Indus Valley Civilization."
+                                    },
+                                    {
+                                        "qno": 7,
+                                        "question": "Explain the Varna system as described in the Vedic texts. How did it impact society?"
+                                    },
+                                    {
+                                        "qno": 8,
+                                        "question": "Describe the trade and economic activities during the Mauryan period."
+                                    },
+                                    {
+                                        "qno": 9,
+                                        "question": "What were the causes and results of Alexander's invasion of India?"
+                                    },
+                                    {
+                                        "qno": 10,
+                                        "question": "Discuss the role of Sangam literature in reconstructing the history of South India."
+                                    }
+                                ]
+                            },
+                            {
+                                "section_id": "long_questions",
+                                "title": "Long Questions",
+                                "marks": 45,
+                                "question_type": "long_answer",
+                                "questions": [
+                                    {
+                                        "qno": 11,
+                                        "question": "Examine the political and administrative system of the Mauryan Empire. Highlight the role of Arthashastra in governance."
+                                    },
+                                    {
+                                        "qno": 12,
+                                        "question": "Describe the cultural achievements of the Gupta period with reference to art, science, and literature."
+                                    },
+                                    {
+                                        "qno": 13,
+                                        "question": "Discuss the rise of Buddhism and Jainism. Compare their teachings and analyze their impact on Indian society."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                };
+            }
+
+            initEventListeners() {
+                document.getElementById('submit-exam-btn').addEventListener('click', this.submitExam.bind(this));
+                document.getElementById('restart-exam-btn').addEventListener('click', this.restartExam.bind(this));
+                document.getElementById('download-results-btn').addEventListener('click', this.downloadResults.bind(this));
+                document.getElementById('save-api-key').addEventListener('click', this.saveApiKey.bind(this));
+                document.getElementById('skip-api').addEventListener('click', this.skipApiKey.bind(this));
+            }
+
+            saveApiKey() {
+                const apiKey = document.getElementById('api-key-input').value.trim();
+                if (apiKey) {
+                    this.geminiApiKey = apiKey;
+                    localStorage.setItem('geminiApiKey', apiKey);
+                }
+                document.getElementById('api-modal').style.display = 'none';
+                this.startExam();
+            }
+
+            skipApiKey() {
+                document.getElementById('api-modal').style.display = 'none';
+                this.startExam();
+            }
+
+            validateExamData() {
+                if (!this.examData?.exam?.sections || !Array.isArray(this.examData.exam.sections)) {
+                    throw new Error('Invalid exam format');
+                }
+            }
+
+            startExam() {
+                document.getElementById('loading-section').classList.add('hidden');
+                document.getElementById('exam-section').classList.remove('hidden');
+                
+                this.timeLeft = (this.examData.exam.duration_minutes || 120) * 60;
+                this.startTimer();
+                this.initializeExam();
+            }
+
+            startTimer() {
+                this.updateTimerDisplay();
+                this.timerInterval = setInterval(() => {
+                    if (this.timeLeft <= 0) {
+                        this.submitExam();
+                        return;
+                    }
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                }, 1000);
+            }
+
+            updateTimerDisplay() {
+                const hours = Math.floor(this.timeLeft / 3600);
+                const minutes = Math.floor((this.timeLeft % 3600) / 60);
+                const seconds = this.timeLeft % 60;
+                
+                const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                document.getElementById('time-display').textContent = timeString;
+            }
+
+            initializeExam() {
+                const exam = this.examData.exam;
+                
+                // Set exam header info
+                document.getElementById('exam-title').textContent = exam.title;
+                document.getElementById('exam-duration').textContent = exam.duration_minutes;
+                document.getElementById('exam-marks').textContent = exam.total_marks;
+                
+                // Count total questions
+                const totalQuestions = exam.sections.reduce((total, section) => total + section.questions.length, 0);
+                document.getElementById('total-questions').textContent = totalQuestions;
+                
+                // Set instructions
+                const instructionsList = document.getElementById('exam-instructions');
+                instructionsList.innerHTML = '';
+                exam.instructions.forEach(instruction => {
+                    const li = document.createElement('li');
+                    li.textContent = instruction;
+                    instructionsList.appendChild(li);
+                });
+                
+                // Generate questions
+                this.generateQuestions();
+                this.updateProgress();
+            }
+
+            generateQuestions() {
+                const container = document.getElementById('questions-container');
+                container.innerHTML = '';
+                
+                this.examData.exam.sections.forEach((section, sectionIndex) => {
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = 'bg-white rounded-lg shadow-md mb-6 overflow-hidden';
+                    
+                    // Section Header
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'section-divider p-6';
+                    headerDiv.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">${section.title}</h3>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    ${section.questions.length} Questions | ${section.marks} Marks | 
+                                    ${section.question_type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())} Type
+                                </p>
+                            </div>
+                            <div class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-semibold">
+                                ${section.marks} Marks
+                            </div>
+                        </div>
+                    `;
+                    sectionDiv.appendChild(headerDiv);
+                    
+                    // Questions Container
+                    const questionsDiv = document.createElement('div');
+                    questionsDiv.className = 'p-6 pt-0';
+                    
+                    section.questions.forEach((question, questionIndex) => {
+                        const questionDiv = document.createElement('div');
+                        questionDiv.className = 'mb-8 last:mb-0';
+                        
+                        const wordLimit = this.getWordLimit(section.question_type);
+                        const questionId = `q_${sectionIndex}_${questionIndex}`;
+                        
+                        questionDiv.innerHTML = `
+                            <div class="mb-3">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="text-lg font-semibold text-gray-800">Q${question.qno}.</h4>
+                                    <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
+                                        ${wordLimit} words
+                                    </span>
+                                </div>
+                                <p class="text-gray-700 leading-relaxed">${question.question}</p>
+                            </div>
+                            <div class="relative">
+                                <textarea 
+                                    id="${questionId}"
+                                    class="w-full p-4 border-2 border-gray-200 rounded-lg resize-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                                    rows="${this.getRows(section.question_type)}"
+                                    placeholder="Type your answer here..."
+                                    maxlength="${this.getCharLimit(section.question_type)}"
+                                ></textarea>
+                                <div class="absolute bottom-2 right-2 text-xs text-gray-400">
+                                    <span id="${questionId}_count">0</span>/${this.getCharLimit(section.question_type)} characters
+                                </div>
+                            </div>
+                        `;
+                        
+                        questionsDiv.appendChild(questionDiv);
+                        
+                        // Add character counter
+                        setTimeout(() => {
+                            const textarea = document.getElementById(questionId);
+                            const counter = document.getElementById(`${questionId}_count`);
+                            
+                            textarea.addEventListener('input', () => {
+                                counter.textContent = textarea.value.length;
+                                this.answers[questionId] = textarea.value;
+                                this.updateProgress();
+                            });
+                        }, 100);
+                    });
+                    
+                    sectionDiv.appendChild(questionsDiv);
+                    container.appendChild(sectionDiv);
+                });
+            }
+
+            getWordLimit(questionType) {
+                switch(questionType) {
+                    case 'short_answer': return '50-100';
+                    case 'medium_answer': return '150-200';
+                    case 'long_answer': return '250-300';
+                    default: return '100-150';
+                }
+            }
+
+            getRows(questionType) {
+                switch(questionType) {
+                    case 'short_answer': return 4;
+                    case 'medium_answer': return 8;
+                    case 'long_answer': return 12;
+                    default: return 6;
+                }
+            }
+
+            getCharLimit(questionType) {
+                switch(questionType) {
+                    case 'short_answer': return 800;
+                    case 'medium_answer': return 1600;
+                    case 'long_answer': return 2400;
+                    default: return 1200;
+                }
+            }
+
+            updateProgress() {
+                const totalQuestions = this.examData.exam.sections.reduce((total, section) => total + section.questions.length, 0);
+                const answeredQuestions = Object.keys(this.answers).filter(key => this.answers[key].trim()).length;
+                
+                const percentage = (answeredQuestions / totalQuestions) * 100;
+                document.getElementById('progress-bar').style.width = `${percentage}%`;
+                document.getElementById('progress-text').textContent = `${answeredQuestions} / ${totalQuestions} answered`;
+            }
+
+            async submitExam() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+
+                // Show loading
+                const submitBtn = document.getElementById('submit-exam-btn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Evaluating...';
+                submitBtn.disabled = true;
+
+                try {
+                    if (this.geminiApiKey) {
+                        await this.evaluateWithGemini();
+                    } else {
+                        this.showBasicResults();
+                    }
+                } catch (error) {
+                    console.error('Evaluation error:', error);
+                    this.showBasicResults();
+                }
+
+                document.getElementById('exam-section').classList.add('hidden');
+                document.getElementById('results-section').classList.remove('hidden');
+            }
+
+            async evaluateWithGemini() {
+                const prompt = this.generateEvaluationPrompt();
+                
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${this.geminiApiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.1,
+                            maxOutputTokens: 4000,
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Gemini API request failed');
+                }
+
+                const data = await response.json();
+                const result = JSON.parse(data.candidates[0].content.parts[0].text);
+                
+                this.displayGeminiResults(result);
+            }
+
+            generateEvaluationPrompt() {
+                const examData = JSON.stringify(this.examData, null, 2);
+                const answers = JSON.stringify(this.answers, null, 2);
+
+                return `You are an expert UPSC examiner evaluating a Class 6 History exam. Evaluate the following exam answers and provide a detailed assessment.
+
+EXAM DATA:
+${examData}
+
+STUDENT ANSWERS:
+${answers}
+
+Please evaluate each answer based on:
+1. Content accuracy and relevance
+2. Depth of understanding
+3. Historical context and facts
+4. Writing clarity and structure
+5. Adherence to word limits
+
+Provide your evaluation in the following JSON format:
+
+{
+  "overall_score": number (0-120),
+  "percentage": number (0-100),
+  "grade": "string (A+/A/B+/B/C+/C/D/F)",
+  "section_results": [
+    {
+      "section_title": "string",
+      "section_score": number,
+      "section_max": number,
+      "section_percentage": number,
+      "questions": [
+        {
+          "question_number": number,
+          "score": number,
+          "max_score": number,
+          "feedback": "detailed feedback string"
+        }
+      ]
+    }
+  ],
+  "strengths": ["array of strength points"],
+  "areas_for_improvement": ["array of improvement suggestions"],
+  "detailed_analysis": "comprehensive analysis paragraph",
+  "recommendations": "study recommendations paragraph"
+}
+
+Be thorough but constructive in your evaluation. Focus on helping the student improve their understanding of Indian history.`;
+            }
+
+            displayGeminiResults(result) {
+                // Overall Score
+                document.getElementById('overall-score').textContent = `${result.percentage}%`;
+                document.getElementById('total-score-display').textContent = `${result.overall_score}/${this.examData.exam.total_marks}`;
+                document.getElementById('percentage-display').textContent = `${result.percentage}%`;
+                document.getElementById('grade-display').textContent = result.grade;
+
+                // Section Results
+                const sectionBreakdown = document.getElementById('section-breakdown');
+                sectionBreakdown.innerHTML = '';
+
+                result.section_results.forEach(section => {
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = 'bg-white rounded-lg p-4 mb-4 border';
+                    sectionDiv.innerHTML = `
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-semibold text-gray-800">${section.section_title}</h4>
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">
+                                ${section.section_score}/${section.section_max} (${section.section_percentage}%)
+                            </span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
+                            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full" 
+                                 style="width: ${section.section_percentage}%"></div>
+                        </div>
+                        <div class="space-y-2">
+                            ${section.questions.map(q => `
+                                <div class="text-sm">
+                                    <span class="font-medium">Q${q.question_number}:</span> 
+                                    <span class="text-gray-600">${q.score}/${q.max_score} - ${q.feedback}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    sectionBreakdown.appendChild(sectionDiv);
+                });
+
+                // Detailed Analysis
+                const analysisContent = document.getElementById('analysis-content');
+                analysisContent.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-green-800 mb-2">Strengths</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm text-green-700">
+                                ${result.strengths.map(strength => `<li>${strength}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-yellow-800 mb-2">Areas for Improvement</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm text-yellow-700">
+                                ${result.areas_for_improvement.map(area => `<li>${area}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <h4 class="font-semibold text-blue-800 mb-2">Detailed Analysis</h4>
+                        <p class="text-blue-700 text-sm leading-relaxed">${result.detailed_analysis}</p>
+                    </div>
+                    
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-purple-800 mb-2">Study Recommendations</h4>
+                        <p class="text-purple-700 text-sm leading-relaxed">${result.recommendations}</p>
+                    </div>
+                `;
+            }
+
+            showBasicResults() {
+                const totalQuestions = this.examData.exam.sections.reduce((total, section) => total + section.questions.length, 0);
+                const answeredQuestions = Object.keys(this.answers).filter(key => this.answers[key].trim()).length;
+                const percentage = Math.round((answeredQuestions / totalQuestions) * 100);
+                const score = Math.round((percentage / 100) * this.examData.exam.total_marks);
+
+                // Basic grade calculation
+                let grade = 'F';
+                if (percentage >= 90) grade = 'A+';
+                else if (percentage >= 80) grade = 'A';
+                else if (percentage >= 70) grade = 'B+';
+                else if (percentage >= 60) grade = 'B';
+                else if (percentage >= 50) grade = 'C+';
+                else if (percentage >= 40) grade = 'C';
+                else if (percentage >= 33) grade = 'D';
+
+                // Display basic results
+                document.getElementById('overall-score').textContent = `${percentage}%`;
+                document.getElementById('total-score-display').textContent = `${score}/${this.examData.exam.total_marks}`;
+                document.getElementById('percentage-display').textContent = `${percentage}%`;
+                document.getElementById('grade-display').textContent = grade;
+
+                // Basic section results
+                const sectionBreakdown = document.getElementById('section-breakdown');
+                sectionBreakdown.innerHTML = '';
+
+                this.examData.exam.sections.forEach((section, index) => {
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = 'bg-white rounded-lg p-4 mb-4 border';
+                    sectionDiv.innerHTML = `
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-semibold text-gray-800">${section.title}</h4>
+                            <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">
+                                Completion: ${Math.round((answeredQuestions / totalQuestions) * 100)}%
+                            </span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full" 
+                                 style="width: ${(answeredQuestions / totalQuestions) * 100}%"></div>
+                        </div>
+                    `;
+                    sectionBreakdown.appendChild(sectionDiv);
+                });
+
+                // Basic analysis
+                const analysisContent = document.getElementById('analysis-content');
+                analysisContent.innerHTML = `
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-2">Basic Analysis</h4>
+                        <p class="text-blue-700 text-sm">
+                            You have completed ${answeredQuestions} out of ${totalQuestions} questions (${percentage}% completion).
+                            ${this.geminiApiKey ? 'Detailed AI evaluation was attempted but failed.' : 'For detailed evaluation and feedback, please configure your Gemini API key.'}
+                        </p>
+                    </div>
+                `;
+            }
+
+            restartExam() {
+                this.answers = {};
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+                
+                document.getElementById('results-section').classList.add('hidden');
+                document.getElementById('exam-section').classList.remove('hidden');
+                
+                this.timeLeft = (this.examData.exam.duration_minutes || 120) * 60;
+                this.startTimer();
+                
+                // Clear all textareas
+                document.querySelectorAll('textarea').forEach(textarea => {
+                    textarea.value = '';
+                    const counter = document.getElementById(textarea.id + '_count');
+                    if (counter) counter.textContent = '0';
+                });
+                
+                this.updateProgress();
+            }
+
+            downloadResults() {
+                const results = this.generateResultsText();
+                const blob = new Blob([results], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `UPSC_History_Test_Results_${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                URL.revokeObjectURL(url);
+            }
+
+            generateResultsText() {
+                const exam = this.examData.exam;
+                const totalQuestions = exam.sections.reduce((total, section) => total + section.questions.length, 0);
+                const answeredQuestions = Object.keys(this.answers).filter(key => this.answers[key].trim()).length;
+                const percentage = Math.round((answeredQuestions / totalQuestions) * 100);
+
+                let results = `UPSC HISTORY TEST RESULTS\n`;
+                results += `========================\n\n`;
+                results += `Exam: ${exam.title}\n`;
+                results += `Date: ${new Date().toLocaleDateString()}\n`;
+                results += `Duration: ${exam.duration_minutes} minutes\n`;
+                results += `Total Marks: ${exam.total_marks}\n\n`;
+                
+                results += `PERFORMANCE SUMMARY\n`;
+                results += `==================\n`;
+                results += `Questions Answered: ${answeredQuestions}/${totalQuestions}\n`;
+                results += `Completion Rate: ${percentage}%\n\n`;
+                
+                results += `ANSWERS\n`;
+                results += `=======\n\n`;
+                
+                exam.sections.forEach((section, sectionIndex) => {
+                    results += `${section.title.toUpperCase()}\n`;
+                    results += `${'-'.repeat(section.title.length)}\n\n`;
+                    
+                    section.questions.forEach((question, questionIndex) => {
+                        const questionId = `q_${sectionIndex}_${questionIndex}`;
+                        const answer = this.answers[questionId] || '[No answer provided]';
+                        
+                        results += `Q${question.qno}. ${question.question}\n\n`;
+                        results += `Answer: ${answer}\n\n`;
+                        results += `${'='.repeat(50)}\n\n`;
+                    });
+                });
+
+                return results;
+            }
+        }
+
+        // Initialize the exam application
+        document.addEventListener('DOMContentLoaded', () => {
+            new ExamApp();
+        });
+    </script>
+</body>
+</html>
