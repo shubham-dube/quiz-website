@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master - UPSC Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-shadow { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .option-btn { 
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        .option-btn:hover { border-color: #6366f1; }
+        .option-btn.selected { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+        .option-btn.correct { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .option-btn.incorrect { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .progress-bar { transition: width 0.5s ease; }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Compact Header -->
+    <header class="gradient-bg text-white shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-graduation-cap text-xl"></i>
+                    <div>
+                        <h1 class="text-lg font-bold">Quiz Master</h1>
+                        <p class="text-xs text-indigo-200">UPSC Foundation</p>
+                    </div>
+                </div>
+                <div id="timer" class="bg-white/20 backdrop-blur-md rounded px-3 py-1 flex items-center space-x-1">
+                    <i class="fas fa-clock text-sm"></i>
+                    <span id="time-display" class="font-mono text-sm">50:00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-4">
+        <!-- Loading Section -->
+        <div id="loading-section" class="max-w-xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <i class="fas fa-spinner fa-spin text-3xl text-indigo-400 mb-3"></i>
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Loading Quiz...</h2>
+                <p class="text-gray-600 text-sm">Preparing your assessment</p>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quiz-section" class="hidden max-w-4xl mx-auto">
+            <!-- Progress Bar -->
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-xs font-medium text-gray-600">Progress</span>
+                    <span id="progress-text" class="text-xs font-medium text-gray-600">0 / 0</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progress-bar" class="progress-bar bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Question Navigation -->
+            <div class="bg-white rounded-lg shadow-md p-3 mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-semibold text-gray-700">Questions</h3>
+                    <div class="flex space-x-2 text-xs">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-gray-100 text-gray-700">
+                            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full mr-1"></div>Not Done
+                        </span>
+                        <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-700">
+                            <div class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-1"></div>Done
+                        </span>
+                    </div>
+                </div>
+                <div id="question-nav" class="grid grid-cols-10 gap-1 sm:grid-cols-15 lg:grid-cols-20">
+                    <!-- Navigation buttons will be generated here -->
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden fade-in">
+                <!-- Question Header -->
+                <div class="gradient-bg text-white p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="bg-white/20 rounded-full p-1">
+                                <i class="fas fa-question text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-semibold">Q <span id="current-q-num">1</span></h3>
+                                <p class="text-xs text-indigo-200">3 marks</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-indigo-200">Subject</p>
+                            <p id="subject-name" class="text-sm font-semibold">History</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Content -->
+                <div class="p-4">
+                    <div id="question-text" class="text-base font-medium text-gray-800 mb-4 leading-relaxed">
+                        <!-- Question will be loaded here -->
+                    </div>
+
+                    <!-- Options -->
+                    <div id="options-container" class="space-y-2">
+                        <!-- Options will be generated here -->
+                    </div>
+
+                    <!-- Explanation (shown after submission) -->
+                    <div id="explanation-section" class="hidden mt-4 p-3 bg-blue-50 border-l-4 border-blue-400 rounded-r">
+                        <h4 class="flex items-center text-sm font-semibold text-blue-800 mb-2">
+                            <i class="fas fa-lightbulb mr-1"></i>Explanation
+                        </h4>
+                        <p id="explanation-text" class="text-sm text-blue-700"></p>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="bg-gray-50 px-4 py-3 flex justify-between items-center">
+                    <button id="prev-btn" class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors disabled:opacity-50 text-sm">
+                        <i class="fas fa-chevron-left mr-1"></i>Prev
+                    </button>
+                    <div class="flex space-x-2">
+                        <button id="clear-btn" class="px-3 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors text-sm">
+                            <i class="fas fa-eraser mr-1"></i>Clear
+                        </button>
+                        <button id="submit-quiz-btn" class="hidden px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded font-semibold hover:shadow-lg transition-all text-sm">
+                            <i class="fas fa-check mr-1"></i>Submit
+                        </button>
+                    </div>
+                    <button id="next-btn" class="flex items-center px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded hover:shadow-lg transition-all text-sm">
+                        Next<i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="hidden max-w-3xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="mb-4">
+                    <div class="w-24 h-24 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mb-3 mx-auto">
+                        <span id="score-percentage" class="text-xl font-bold text-white">0%</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-1">Quiz Completed!</h2>
+                    <p class="text-gray-600 text-sm">Here's your performance summary</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-green-50 p-4 rounded">
+                        <i class="fas fa-check-circle text-2xl text-green-500 mb-1"></i>
+                        <h3 class="text-xl font-bold text-green-700" id="correct-count">0</h3>
+                        <p class="text-green-600 text-sm">Correct</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded">
+                        <i class="fas fa-times-circle text-2xl text-red-500 mb-1"></i>
+                        <h3 class="text-xl font-bold text-red-700" id="incorrect-count">0</h3>
+                        <p class="text-red-600 text-sm">Incorrect</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded">
+                        <i class="fas fa-star text-2xl text-blue-500 mb-1"></i>
+                        <h3 class="text-xl font-bold text-blue-700" id="total-score">0</h3>
+                        <p class="text-blue-600 text-sm">Score</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center space-x-3">
+                    <button id="review-btn" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded font-semibold hover:shadow-lg transition-all text-sm">
+                        <i class="fas fa-eye mr-1"></i>Review
+                    </button>
+                    <button id="restart-btn" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded font-semibold hover:shadow-lg transition-all text-sm">
+                        <i class="fas fa-redo mr-1"></i>Restart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        class QuizApp {
+            constructor() {
+                this.quizData = null;
+                this.userAnswers = {};
+                this.currentQuestion = 0;
+                this.isSubmitted = false;
+                this.timerInterval = null;
+                this.timeLeft = 0;
+                
+                this.initEventListeners();
+                this.loadQuizData();
+            }
+
+            async loadQuizData() {
+                try {
+                    const response = await fetch('./questions.json');
+                    if (!response.ok) throw new Error('Failed to load quiz data');
+                    
+                    this.quizData = await response.json();
+                    this.validateQuizData();
+                    
+                    // Auto-start quiz after loading
+                    setTimeout(() => {
+                        this.startQuiz();
+                    }, 1000);
+                    
+                } catch (error) {
+                    document.getElementById('loading-section').innerHTML = `
+                        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                            <i class="fas fa-exclamation-triangle text-3xl text-red-400 mb-3"></i>
+                            <h2 class="text-xl font-bold text-gray-800 mb-2">Error Loading Quiz</h2>
+                            <p class="text-gray-600 text-sm mb-4">Could not load questions.json file</p>
+                            <button onclick="location.reload()" class="bg-indigo-500 text-white px-4 py-2 rounded text-sm hover:bg-indigo-600">
+                                <i class="fas fa-redo mr-1"></i>Retry
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+            initEventListeners() {
+                document.getElementById('prev-btn').addEventListener('click', () => this.navigateQuestion(-1));
+                document.getElementById('next-btn').addEventListener('click', () => this.navigateQuestion(1));
+                document.getElementById('clear-btn').addEventListener('click', this.clearAnswer.bind(this));
+                document.getElementById('submit-quiz-btn').addEventListener('click', this.submitQuiz.bind(this));
+                document.getElementById('review-btn').addEventListener('click', this.reviewAnswers.bind(this));
+                document.getElementById('restart-btn').addEventListener('click', this.restartQuiz.bind(this));
+            }
+
+            validateQuizData() {
+                if (!this.quizData.questions || !Array.isArray(this.quizData.questions)) {
+                    throw new Error('Invalid quiz format');
+                }
+            }
+
+            startQuiz() {
+                document.getElementById('loading-section').classList.add('hidden');
+                document.getElementById('quiz-section').classList.remove('hidden');
+                
+                this.timeLeft = parseInt(this.quizData.duration || 50) * 60;
+                this.startTimer();
+                this.initializeQuiz();
+            }
+
+            startTimer() {
+                this.timerInterval = setInterval(() => {
+                    const minutes = Math.floor(this.timeLeft / 60);
+                    const seconds = this.timeLeft % 60;
+                    document.getElementById('time-display').textContent = 
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    if (this.timeLeft <= 0) {
+                        this.submitQuiz();
+                        return;
+                    }
+                    this.timeLeft--;
+                }, 1000);
+            }
+
+            initializeQuiz() {
+                this.generateNavigationButtons();
+                this.loadQuestion(0);
+                this.updateProgress();
+                document.getElementById('subject-name').textContent = this.quizData.subject || 'Quiz';
+            }
+
+            generateNavigationButtons() {
+                const navContainer = document.getElementById('question-nav');
+                navContainer.innerHTML = '';
+                
+                this.quizData.questions.forEach((_, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'w-6 h-6 rounded border text-xs font-medium hover:border-indigo-400 transition-colors bg-white';
+                    btn.textContent = index + 1;
+                    btn.onclick = () => this.loadQuestion(index);
+                    navContainer.appendChild(btn);
+                });
+            }
+
+            loadQuestion(index) {
+                this.currentQuestion = index;
+                const question = this.quizData.questions[index];
+                
+                document.getElementById('current-q-num').textContent = index + 1;
+                document.getElementById('question-text').textContent = question.question;
+                
+                this.generateOptions(question.options, index);
+                this.updateNavigationState();
+                this.updateProgress();
+                this.updateQuestionNavigation();
+
+                const explanationSection = document.getElementById('explanation-section');
+                if (this.isSubmitted) {
+                    explanationSection.classList.remove('hidden');
+                    document.getElementById('explanation-text').textContent = question.explanation;
+                } else {
+                    explanationSection.classList.add('hidden');
+                }
+            }
+
+            generateOptions(options, questionIndex) {
+                const container = document.getElementById('options-container');
+                container.innerHTML = '';
+                
+                options.forEach((option, optionIndex) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn w-full p-3 text-left bg-gray-50 hover:bg-gray-100 rounded border-2 border-transparent';
+                    btn.innerHTML = `
+                        <div class="flex items-center">
+                            <span class="w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-semibold mr-3 text-xs">
+                                ${String.fromCharCode(65 + optionIndex)}
+                            </span>
+                            <span class="flex-1 text-sm">${option}</span>
+                        </div>
+                    `;
+                    
+                    if (this.userAnswers[questionIndex] === option) {
+                        btn.classList.add('selected');
+                    }
+
+                    if (this.isSubmitted) {
+                        const correctAnswer = this.quizData.questions[questionIndex].answer;
+                        if (option === correctAnswer) {
+                            btn.classList.add('correct');
+                        } else if (this.userAnswers[questionIndex] === option && option !== correctAnswer) {
+                            btn.classList.add('incorrect');
+                        }
+                        btn.disabled = true;
+                    } else {
+                        btn.onclick = () => this.selectAnswer(questionIndex, option);
+                    }
+                    
+                    container.appendChild(btn);
+                });
+            }
+
+            selectAnswer(questionIndex, answer) {
+                this.userAnswers[questionIndex] = answer;
+                this.loadQuestion(questionIndex);
+            }
+
+            clearAnswer() {
+                delete this.userAnswers[this.currentQuestion];
+                this.loadQuestion(this.currentQuestion);
+            }
+
+            navigateQuestion(direction) {
+                const newIndex = this.currentQuestion + direction;
+                if (newIndex >= 0 && newIndex < this.quizData.questions.length) {
+                    this.loadQuestion(newIndex);
+                }
+            }
+
+            updateNavigationState() {
+                document.getElementById('prev-btn').disabled = this.currentQuestion === 0;
+                document.getElementById('next-btn').disabled = this.currentQuestion === this.quizData.questions.length - 1;
+                
+                if (this.currentQuestion === this.quizData.questions.length - 1) {
+                    document.getElementById('submit-quiz-btn').classList.remove('hidden');
+                } else {
+                    document.getElementById('submit-quiz-btn').classList.add('hidden');
+                }
+            }
+
+            updateProgress() {
+                const answered = Object.keys(this.userAnswers).length;
+                const total = this.quizData.questions.length;
+                const percentage = (answered / total) * 100;
+                
+                document.getElementById('progress-bar').style.width = `${percentage}%`;
+                document.getElementById('progress-text').textContent = `${answered} / ${total}`;
+            }
+
+            updateQuestionNavigation() {
+                const navButtons = document.getElementById('question-nav').children;
+                Array.from(navButtons).forEach((btn, index) => {
+                    btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500');
+                    btn.classList.add('border-gray-300');
+                    
+                    if (this.userAnswers.hasOwnProperty(index)) {
+                        btn.classList.remove('border-gray-300');
+                        btn.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
+                    }
+                    
+                    if (index === this.currentQuestion) {
+                        btn.classList.add('ring-2', 'ring-indigo-400');
+                    } else {
+                        btn.classList.remove('ring-2', 'ring-indigo-400');
+                    }
+                });
+            }
+
+            submitQuiz() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+                
+                this.isSubmitted = true;
+                this.calculateResults();
+                this.showResults();
+            }
+
+            calculateResults() {
+                let correct = 0;
+                let incorrect = 0;
+                
+                this.quizData.questions.forEach((question, index) => {
+                    if (this.userAnswers[index] === question.answer) {
+                        correct++;
+                    } else if (this.userAnswers.hasOwnProperty(index)) {
+                        incorrect++;
+                    }
+                });
+                
+                const totalScore = correct * 3;
+                const maxScore = this.quizData.questions.length * 3;
+                const percentage = Math.round((totalScore / maxScore) * 100);
+                
+                this.results = { correct, incorrect, totalScore, maxScore, percentage };
+            }
+
+            showResults() {
+                document.getElementById('quiz-section').classList.add('hidden');
+                document.getElementById('results-section').classList.remove('hidden');
+                
+                document.getElementById('score-percentage').textContent = `${this.results.percentage}%`;
+                document.getElementById('correct-count').textContent = this.results.correct;
+                document.getElementById('incorrect-count').textContent = this.results.incorrect;
+                document.getElementById('total-score').textContent = `${this.results.totalScore}/${this.results.maxScore}`;
+            }
+
+            reviewAnswers() {
+                document.getElementById('results-section').classList.add('hidden');
+                document.getElementById('quiz-section').classList.remove('hidden');
+                this.loadQuestion(0);
+            }
+
+            restartQuiz() {
+                this.userAnswers = {};
+                this.currentQuestion = 0;
+                this.isSubmitted = false;
+                
+                document.getElementById('results-section').classList.add('hidden');
+                document.getElementById('loading-section').classList.remove('hidden');
+                
+                // Reload quiz data
+                setTimeout(() => {
+                    this.loadQuizData();
+                }, 500);
+            }
+        }
+
+        // Initialize the quiz application
+        const quizApp = new QuizApp();
+    </script>
+</body>
+</html>

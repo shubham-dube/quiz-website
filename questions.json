@@ -1,0 +1,608 @@
+{
+    "title": "Class 6 History UPSC-Oriented Test",
+    "subject": "History",
+    "level": "UPSC Foundation",
+    "duration": "50 minutes",
+    "questions": [
+        {
+            "id": 1,
+            "question": "Which of the following was the main occupation of the people of the Indus Valley Civilization?",
+            "options": [
+                "Hunting",
+                "Agriculture",
+                "Pastoralism",
+                "Trade"
+            ],
+            "answer": "Agriculture",
+            "explanation": "Archaeological evidence like granaries and plough marks suggest agriculture was the main occupation."
+        },
+        {
+            "id": 2,
+            "question": "The Great Bath was discovered at which Harappan site?",
+            "options": [
+                "Harappa",
+                "Mohenjo-Daro",
+                "Kalibangan",
+                "Lothal"
+            ],
+            "answer": "Mohenjo-Daro",
+            "explanation": "The Great Bath is one of the most significant structures of Mohenjo-Daro, likely used for ritual bathing."
+        },
+        {
+            "id": 3,
+            "question": "The script of the Harappans remains undeciphered. Which fact is correct about it?",
+            "options": [
+                "It was written from left to right",
+                "It was written from right to left",
+                "It had 2000 symbols",
+                "It was alphabetic"
+            ],
+            "answer": "It was written from right to left",
+            "explanation": "Most scholars agree Harappan script was pictographic and written right to left."
+        },
+        {
+            "id": 4,
+            "question": "Which Veda contains hymns dedicated to various gods like Agni, Indra, and Varuna?",
+            "options": [
+                "Rigveda",
+                "Samaveda",
+                "Atharvaveda",
+                "Yajurveda"
+            ],
+            "answer": "Rigveda",
+            "explanation": "Rigveda contains 1028 hymns composed in praise of gods."
+        },
+        {
+            "id": 5,
+            "question": "The Painted Grey Ware (PGW) pottery is associated with which age?",
+            "options": [
+                "Stone Age",
+                "Harappan Age",
+                "Iron Age",
+                "Medieval Age"
+            ],
+            "answer": "Iron Age",
+            "explanation": "PGW pottery is linked to the early Iron Age and later Vedic culture."
+        },
+        {
+            "id": 6,
+            "question": "Which was the capital of Magadha during the time of Bimbisara?",
+            "options": [
+                "Patliputra",
+                "Rajagriha",
+                "Vaishali",
+                "Ujjain"
+            ],
+            "answer": "Rajagriha",
+            "explanation": "Bimbisara made Rajagriha the capital of Magadha before it was shifted to Pataliputra."
+        },
+        {
+            "id": 7,
+            "question": "Which of the following was a Mahajanapada?",
+            "options": [
+                "Taxila",
+                "Kosala",
+                "Nalanda",
+                "Kanauj"
+            ],
+            "answer": "Kosala",
+            "explanation": "Kosala was one of the sixteen Mahajanapadas that flourished around 600 BCE."
+        },
+        {
+            "id": 8,
+            "question": "The teachings of Mahavira are contained in which texts?",
+            "options": [
+                "Tripitaka",
+                "Agamas",
+                "Arthashastra",
+                "Jataka tales"
+            ],
+            "answer": "Agamas",
+            "explanation": "Agamas are the canonical scriptures of Jainism containing Mahavira’s teachings."
+        },
+        {
+            "id": 9,
+            "question": "Buddha attained enlightenment at:",
+            "options": [
+                "Lumbini",
+                "Sarnath",
+                "Bodh Gaya",
+                "Kusinagara"
+            ],
+            "answer": "Bodh Gaya",
+            "explanation": "Siddhartha Gautama attained enlightenment under the Bodhi tree at Bodh Gaya."
+        },
+        {
+            "id": 10,
+            "question": "The first sermon of Buddha is called:",
+            "options": [
+                "Mahaparinirvana",
+                "Dhamma Chakra Pravartana",
+                "Bodhisattva",
+                "Arthashastra"
+            ],
+            "answer": "Dhamma Chakra Pravartana",
+            "explanation": "At Sarnath, Buddha gave his first sermon, known as Dhamma Chakra Pravartana (Turning of the Wheel of Law)."
+        },
+        {
+            "id": 11,
+            "question": "The Nanda dynasty was overthrown by:",
+            "options": [
+                "Bindusara",
+                "Chandragupta Maurya",
+                "Ashoka",
+                "Kanishka"
+            ],
+            "answer": "Chandragupta Maurya",
+            "explanation": "Chandragupta Maurya, with Chanakya’s support, defeated the Nandas to establish the Mauryan Empire."
+        },
+        {
+            "id": 12,
+            "question": "Who was the author of Arthashastra?",
+            "options": [
+                "Chanakya",
+                "Patanjali",
+                "Kalidasa",
+                "Panini"
+            ],
+            "answer": "Chanakya",
+            "explanation": "Arthashastra was written by Chanakya (Kautilya) and deals with statecraft, politics, and economy."
+        },
+        {
+            "id": 13,
+            "question": "Which foreign traveler wrote ‘Indica’, providing valuable details about the Mauryan administration?",
+            "options": [
+                "Fa-Hien",
+                "Hiuen Tsang",
+                "Megasthenes",
+                "Al-Biruni"
+            ],
+            "answer": "Megasthenes",
+            "explanation": "Megasthenes, ambassador of Seleucus, wrote Indica describing Mauryan polity and society."
+        },
+        {
+            "id": 14,
+            "question": "Ashoka embraced Buddhism after:",
+            "options": [
+                "The Kalinga War",
+                "The Panipat War",
+                "Alexander’s invasion",
+                "The rise of Mahajanapadas"
+            ],
+            "answer": "The Kalinga War",
+            "explanation": "Ashoka turned to Buddhism after witnessing the bloodshed of the Kalinga War."
+        },
+        {
+            "id": 15,
+            "question": "Ashoka’s inscriptions were mostly written in which script?",
+            "options": [
+                "Brahmi",
+                "Kharosthi",
+                "Devanagari",
+                "Tamil-Brahmi"
+            ],
+            "answer": "Brahmi",
+            "explanation": "Most of Ashoka’s inscriptions are in Brahmi script; some in Kharosthi (Northwest India)."
+        },
+        {
+            "id": 16,
+            "question": "Which dynasty is called the ‘Golden Age’ of India?",
+            "options": [
+                "Maurya",
+                "Gupta",
+                "Kushan",
+                "Nanda"
+            ],
+            "answer": "Gupta",
+            "explanation": "The Gupta period is called the ‘Golden Age’ due to progress in art, science, literature, and economy."
+        },
+        {
+            "id": 17,
+            "question": "Who was known as ‘Napoleon of India’?",
+            "options": [
+                "Ashoka",
+                "Samudragupta",
+                "Chandragupta II",
+                "Harshavardhana"
+            ],
+            "answer": "Samudragupta",
+            "explanation": "Samudragupta earned this title for his military conquests."
+        },
+        {
+            "id": 18,
+            "question": "The Allahabad Pillar inscription of Samudragupta was composed by:",
+            "options": [
+                "Kalidasa",
+                "Harishena",
+                "Banabhatta",
+                "Aryabhata"
+            ],
+            "answer": "Harishena",
+            "explanation": "Harishena, court poet of Samudragupta, wrote the Allahabad Pillar inscription."
+        },
+        {
+            "id": 19,
+            "question": "Who wrote the play ‘Abhijnanasakuntalam’?",
+            "options": [
+                "Kalidasa",
+                "Bhasa",
+                "Banabhatta",
+                "Harsha"
+            ],
+            "answer": "Kalidasa",
+            "explanation": "Kalidasa, classical Sanskrit poet, wrote Abhijnanasakuntalam."
+        },
+        {
+            "id": 20,
+            "question": "The university of Nalanda was established during which period?",
+            "options": [
+                "Maurya",
+                "Gupta",
+                "Kushan",
+                "Delhi Sultanate"
+            ],
+            "answer": "Gupta",
+            "explanation": "Nalanda flourished under the Guptas and became an international center for Buddhist studies."
+        },
+        {
+            "id": 21,
+            "question": "Which of the following was NOT a feature of the Harappan cities?",
+            "options": [
+                "Grid pattern",
+                "Underground drainage system",
+                "Use of iron tools",
+                "Citadel and lower town"
+            ],
+            "answer": "Use of iron tools",
+            "explanation": "The Harappans used copper, bronze, and stone tools but not iron."
+        },
+        {
+            "id": 22,
+            "question": "What does the word ‘Veda’ mean?",
+            "options": [
+                "Knowledge",
+                "Law",
+                "Religion",
+                "Hymn"
+            ],
+            "answer": "Knowledge",
+            "explanation": "Veda means ‘knowledge’ or ‘wisdom’ in Sanskrit."
+        },
+        {
+            "id": 23,
+            "question": "Who was the founder of Buddhism?",
+            "options": [
+                "Mahavira",
+                "Siddhartha Gautama",
+                "Patanjali",
+                "Ashoka"
+            ],
+            "answer": "Siddhartha Gautama",
+            "explanation": "Siddhartha Gautama, later known as Buddha, founded Buddhism in the 6th century BCE."
+        },
+        {
+            "id": 24,
+            "question": "Which Janapada had its capital at Taxila?",
+            "options": [
+                "Avanti",
+                "Gandhara",
+                "Magadha",
+                "Kosala"
+            ],
+            "answer": "Gandhara",
+            "explanation": "The Mahajanapada of Gandhara had Taxila as its capital, an important trade and learning center."
+        },
+        {
+            "id": 25,
+            "question": "Who was the immediate successor of Chandragupta Maurya?",
+            "options": [
+                "Bindusara",
+                "Ashoka",
+                "Samudragupta",
+                "Bimbisara"
+            ],
+            "answer": "Bindusara",
+            "explanation": "Bindusara succeeded Chandragupta Maurya before Ashoka ascended the throne."
+        },
+        {
+            "id": 26,
+            "question": "Ashoka appointed officials to spread his Dhamma. They were called:",
+            "options": [
+                "Dhamma Mahamattas",
+                "Rajgurus",
+                "Upadhyayas",
+                "Graminis"
+            ],
+            "answer": "Dhamma Mahamattas",
+            "explanation": "Ashoka’s Dhamma Mahamattas were officials who spread his message of peace and morality."
+        },
+        {
+            "id": 27,
+            "question": "Which Gupta ruler is known for his title ‘Vikramaditya’?",
+            "options": [
+                "Chandragupta I",
+                "Chandragupta II",
+                "Samudragupta",
+                "Skandagupta"
+            ],
+            "answer": "Chandragupta II",
+            "explanation": "Chandragupta II adopted the title Vikramaditya and expanded the Gupta Empire."
+        },
+        {
+            "id": 28,
+            "question": "Which astronomer of Gupta period wrote Aryabhatiya?",
+            "options": [
+                "Aryabhata",
+                "Varahamihira",
+                "Brahmagupta",
+                "Bhaskaracharya"
+            ],
+            "answer": "Aryabhata",
+            "explanation": "Aryabhata wrote Aryabhatiya, a foundational text in Indian astronomy and mathematics."
+        },
+        {
+            "id": 29,
+            "question": "Fa-Hien, the Chinese traveler, visited India during the reign of:",
+            "options": [
+                "Ashoka",
+                "Harshavardhana",
+                "Chandragupta II",
+                "Samudragupta"
+            ],
+            "answer": "Chandragupta II",
+            "explanation": "Fa-Hien visited during the reign of Chandragupta II and wrote about Indian society and Buddhism."
+        },
+        {
+            "id": 30,
+            "question": "Which ancient text describes the duties of kings and ministers in detail?",
+            "options": [
+                "Arthashastra",
+                "Ramayana",
+                "Manusmriti",
+                "Rigveda"
+            ],
+            "answer": "Arthashastra",
+            "explanation": "The Arthashastra by Chanakya deals with statecraft, diplomacy, and governance."
+        },
+        {
+            "id": 31,
+            "question": "Which site is associated with dockyards in Harappan Civilization?",
+            "options": [
+                "Kalibangan",
+                "Lothal",
+                "Harappa",
+                "Banawali"
+            ],
+            "answer": "Lothal",
+            "explanation": "Lothal, in Gujarat, had dockyards indicating maritime trade."
+        },
+        {
+            "id": 32,
+            "question": "Which animal was most commonly depicted on seals of Harappan Civilization?",
+            "options": [
+                "Tiger",
+                "Horse",
+                "Unicorn bull",
+                "Elephant"
+            ],
+            "answer": "Unicorn bull",
+            "explanation": "The unicorn bull is the most common motif on Harappan seals."
+        },
+        {
+            "id": 33,
+            "question": "What was the main source of revenue for the Mauryan Empire?",
+            "options": [
+                "Trade tax",
+                "Land revenue",
+                "Salt tax",
+                "Custom duties"
+            ],
+            "answer": "Land revenue",
+            "explanation": "Agriculture being the mainstay, land revenue was the chief source of income."
+        },
+        {
+            "id": 34,
+            "question": "Who was the court poet of Harshavardhana?",
+            "options": [
+                "Kalidasa",
+                "Banabhatta",
+                "Aryabhata",
+                "Harishena"
+            ],
+            "answer": "Banabhatta",
+            "explanation": "Banabhatta authored Harshacharita, a biography of Harshavardhana."
+        },
+        {
+            "id": 35,
+            "question": "Which of the following is a Buddhist text?",
+            "options": [
+                "Jataka tales",
+                "Agamas",
+                "Ramayana",
+                "Mahabharata"
+            ],
+            "answer": "Jataka tales",
+            "explanation": "Jataka tales narrate stories of Buddha’s previous births."
+        },
+        {
+            "id": 36,
+            "question": "Which ruler convened the Third Buddhist Council?",
+            "options": [
+                "Bimbisara",
+                "Ashoka",
+                "Kanishka",
+                "Harsha"
+            ],
+            "answer": "Ashoka",
+            "explanation": "Ashoka convened the Third Buddhist Council at Pataliputra."
+        },
+        {
+            "id": 37,
+            "question": "The Fourth Buddhist Council was held under the patronage of:",
+            "options": [
+                "Ashoka",
+                "Kanishka",
+                "Bindusara",
+                "Samudragupta"
+            ],
+            "answer": "Kanishka",
+            "explanation": "The Fourth Buddhist Council was held in Kashmir under Kanishka."
+        },
+        {
+            "id": 38,
+            "question": "Who was the founder of the Gupta dynasty?",
+            "options": [
+                "Chandragupta I",
+                "Chandragupta II",
+                "Samudragupta",
+                "Kumaragupta"
+            ],
+            "answer": "Chandragupta I",
+            "explanation": "Chandragupta I founded the Gupta dynasty around 319 CE."
+        },
+        {
+            "id": 39,
+            "question": "The Prayaga Prashasti inscription gives details about which ruler?",
+            "options": [
+                "Ashoka",
+                "Samudragupta",
+                "Harsha",
+                "Skandagupta"
+            ],
+            "answer": "Samudragupta",
+            "explanation": "The Prayaga Prashasti inscription composed by Harishena praises Samudragupta."
+        },
+        {
+            "id": 40,
+            "question": "Who composed the Sanskrit grammar text Ashtadhyayi?",
+            "options": [
+                "Patanjali",
+                "Panini",
+                "Bharata",
+                "Bhasa"
+            ],
+            "answer": "Panini",
+            "explanation": "Panini authored Ashtadhyayi, a foundational text on Sanskrit grammar."
+        },
+        {
+            "id": 41,
+            "question": "Which Gupta ruler is credited with defeating the Shakas?",
+            "options": [
+                "Samudragupta",
+                "Chandragupta II",
+                "Skandagupta",
+                "Chandragupta I"
+            ],
+            "answer": "Chandragupta II",
+            "explanation": "Chandragupta II defeated the Shakas and expanded the Gupta Empire westward."
+        },
+        {
+            "id": 42,
+            "question": "The Ajanta caves are associated with:",
+            "options": [
+                "Jainism",
+                "Hinduism",
+                "Buddhism",
+                "Zoroastrianism"
+            ],
+            "answer": "Buddhism",
+            "explanation": "Ajanta caves in Maharashtra are famous for Buddhist paintings and rock-cut architecture."
+        },
+        {
+            "id": 43,
+            "question": "Which of the following rulers adopted the title of ‘Maharajadhiraja’?",
+            "options": [
+                "Mauryas",
+                "Guptas",
+                "Harsha",
+                "Satavahanas"
+            ],
+            "answer": "Guptas",
+            "explanation": "Gupta rulers adopted titles like Maharajadhiraja, reflecting their imperial power."
+        },
+        {
+            "id": 44,
+            "question": "The iron pillar at Mehrauli, Delhi is associated with which ruler?",
+            "options": [
+                "Chandragupta Maurya",
+                "Ashoka",
+                "Chandragupta II",
+                "Harsha"
+            ],
+            "answer": "Chandragupta II",
+            "explanation": "The Mehrauli Iron Pillar inscription refers to Chandragupta II."
+        },
+        {
+            "id": 45,
+            "question": "Who was the last great Gupta ruler?",
+            "options": [
+                "Skandagupta",
+                "Samudragupta",
+                "Chandragupta I",
+                "Kumaragupta"
+            ],
+            "answer": "Skandagupta",
+            "explanation": "Skandagupta repelled Hun invasions but his reign marked the decline of the Guptas."
+        },
+        {
+            "id": 46,
+            "question": "Which Buddhist university was visited by the Chinese pilgrim Hiuen Tsang?",
+            "options": [
+                "Nalanda",
+                "Takshashila",
+                "Vikramashila",
+                "Kanauj"
+            ],
+            "answer": "Nalanda",
+            "explanation": "Hiuen Tsang studied at Nalanda University in the 7th century CE."
+        },
+        {
+            "id": 47,
+            "question": "Which ancient text is a law book attributed to Manu?",
+            "options": [
+                "Arthashastra",
+                "Rigveda",
+                "Manusmriti",
+                "Mahabharata"
+            ],
+            "answer": "Manusmriti",
+            "explanation": "Manusmriti is a Dharmashastra text prescribing laws and social codes."
+        },
+        {
+            "id": 48,
+            "question": "Who composed the play ‘Mrichchhakatika’ (The Little Clay Cart)?",
+            "options": [
+                "Kalidasa",
+                "Bhasa",
+                "Shudraka",
+                "Harsha"
+            ],
+            "answer": "Shudraka",
+            "explanation": "Mrichchhakatika was composed by Shudraka and depicts urban society."
+        },
+        {
+            "id": 49,
+            "question": "Which Gupta ruler issued gold coins depicting himself playing the Veena?",
+            "options": [
+                "Chandragupta I",
+                "Samudragupta",
+                "Chandragupta II",
+                "Skandagupta"
+            ],
+            "answer": "Samudragupta",
+            "explanation": "Samudragupta issued coins showing him playing the Veena, symbolizing his patronage of arts."
+        },
+        {
+            "id": 50,
+            "question": "Which ruler is associated with the beginning of Harsha era (606 CE)?",
+            "options": [
+                "Harshavardhana",
+                "Chandragupta II",
+                "Kanishka",
+                "Pulakesin II"
+            ],
+            "answer": "Harshavardhana",
+            "explanation": "Harshavardhana began his rule in 606 CE, founding the Harsha era."
+        }
+    ]
+}
